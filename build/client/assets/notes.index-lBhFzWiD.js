@@ -1,0 +1,2 @@
+import{w as i,j as s}from"./chunk-UH6JLGW7-vC5r3Eub.js";const m=i(function(){return s.jsx("div",{className:"container pt-12",children:s.jsx("p",{className:"text-body-md",children:"Select a note"})})}),u=({params:t,matches:a})=>{const e=a.find(r=>r?.id==="routes/users+/$username_+/notes"),n=e?.data?.owner.name??t.username,o=e?.data?.owner.notes.length??0,c=o===1?"note":"notes";return[{title:`${n}'s Notes | Epic Notes`},{name:"description",content:`Checkout ${n}'s ${o} ${c} on Epic Notes`}]};export{m as default,u as meta};
+//# sourceMappingURL=notes.index-lBhFzWiD.js.map
