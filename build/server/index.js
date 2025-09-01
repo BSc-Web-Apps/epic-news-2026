@@ -1123,7 +1123,7 @@ const route10 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.definePrope
   useOptionalTheme,
   useTheme
 }, Symbol.toStringTag, { value: "Module" }));
-const tailwindStyleSheetUrl = "/assets/tailwind-_NRQ9kdt.css";
+const tailwindStyleSheetUrl = "/assets/tailwind-Cvg8XNVv.css";
 const CACHE_DATABASE_PATH = process.env.CACHE_DATABASE_PATH;
 const cacheDb = remember("cacheDb", createDatabase);
 function createDatabase(tryAgain = true) {
