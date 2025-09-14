@@ -3,36 +3,36 @@
     "code": "MOCK_CODE_GITHUB_KODY",
     "accessToken": "MOCK_CODE_GITHUB_KODY_mock_access_token",
     "profile": {
-      "login": "Minnie2",
-      "id": 6764526409743699,
-      "name": "Dexter Collier",
+      "login": "Eldon_Beatty0",
+      "id": 7037157835327669,
+      "name": "Carl Marquardt",
       "avatar_url": "https://github.com/ghost.png",
       "emails": [
-        "Chester_Hoppe@hotmail.com",
-        "Jody_Hauck@hotmail.com",
-        "Juana4@yahoo.com"
+        "Kristina45@gmail.com",
+        "Therese.Ritchie@yahoo.com",
+        "Cyrus_Feil91@yahoo.com"
       ]
     },
     "emails": [
       {
-        "email": "Chester_Hoppe@hotmail.com",
+        "email": "Kristina45@gmail.com",
         "verified": false,
         "primary": false,
         "visibility": "public"
       },
       {
-        "email": "Jody_Hauck@hotmail.com",
+        "email": "Therese.Ritchie@yahoo.com",
         "verified": true,
         "primary": false,
         "visibility": null
       },
       {
-        "email": "Juana4@yahoo.com",
+        "email": "Cyrus_Feil91@yahoo.com",
         "verified": true,
         "primary": true,
         "visibility": "public"
       }
     ],
-    "primaryEmail": "Juana4@yahoo.com"
+    "primaryEmail": "Cyrus_Feil91@yahoo.com"
   }
 ]

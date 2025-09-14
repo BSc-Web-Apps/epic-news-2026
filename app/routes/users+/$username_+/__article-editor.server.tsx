@@ -5,12 +5,12 @@ import { data, redirect, type ActionFunctionArgs } from 'react-router'
 import { z } from 'zod'
 import { requireUserId } from '#app/utils/auth.server.ts'
 import { prisma } from '#app/utils/db.server.ts'
-import { uploadNoteImage } from '#app/utils/storage.server.ts'
+import { uploadArticleImage } from '#app/utils/storage.server.ts'
 import {
 	MAX_UPLOAD_SIZE,
-	NoteEditorSchema,
+	ArticleEditorSchema,
 	type ImageFieldset,
-} from './__note-editor'
+} from './__article-editor'
 
 function imageHasFile(
 	image: ImageFieldset,
@@ -32,31 +32,31 @@ export async function action({ request }: ActionFunctionArgs) {
 	})
 
 	const submission = await parseWithZod(formData, {
-		schema: NoteEditorSchema.superRefine(async (data, ctx) => {
+		schema: ArticleEditorSchema.superRefine(async (data, ctx) => {
 			if (!data.id) return
 
-			const note = await prisma.note.findUnique({
+			const article = await prisma.article.findUnique({
 				select: { id: true },
 				where: { id: data.id, ownerId: userId },
 			})
-			if (!note) {
+			if (!article) {
 				ctx.addIssue({
 					code: z.ZodIssueCode.custom,
-					message: 'Note not found',
+					message: 'Article not found',
 				})
 			}
 		}).transform(async ({ images = [], ...data }) => {
-			const noteId = data.id ?? cuid()
+			const articleId = data.id ?? cuid()
 			return {
 				...data,
-				id: noteId,
+				id: articleId,
 				imageUpdates: await Promise.all(
 					images.filter(imageHasId).map(async (i) => {
 						if (imageHasFile(i)) {
 							return {
 								id: i.id,
 								altText: i.altText,
-								objectKey: await uploadNoteImage(userId, noteId, i.file),
+								objectKey: await uploadArticleImage(userId, articleId, i.file),
 							}
 						} else {
 							return {
@@ -73,7 +73,11 @@ export async function action({ request }: ActionFunctionArgs) {
 						.map(async (image) => {
 							return {
 								altText: image.altText,
-								objectKey: await uploadNoteImage(userId, noteId, image.file),
+								objectKey: await uploadArticleImage(
+									userId,
+									articleId,
+									image.file,
+								),
 							}
 						}),
 				),
@@ -90,18 +94,18 @@ export async function action({ request }: ActionFunctionArgs) {
 	}
 
 	const {
-		id: noteId,
+		id: articleId,
 		title,
 		content,
 		imageUpdates = [],
 		newImages = [],
 	} = submission.value
 
-	const updatedNote = await prisma.note.upsert({
+	const updatedArticle = await prisma.article.upsert({
 		select: { id: true, owner: { select: { username: true } } },
-		where: { id: noteId },
+		where: { id: articleId },
 		create: {
-			id: noteId,
+			id: articleId,
 			ownerId: userId,
 			title,
 			content,
@@ -126,6 +130,6 @@ export async function action({ request }: ActionFunctionArgs) {
 	})
 
 	return redirect(
-		`/users/${updatedNote.owner.username}/notes/${updatedNote.id}`,
+		`/users/${updatedArticle.owner.username}/articles/${updatedArticle.id}`,
 	)
 }

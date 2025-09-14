@@ -2,14 +2,14 @@ import { invariantResponse } from '@epic-web/invariant'
 import { GeneralErrorBoundary } from '#app/components/error-boundary.tsx'
 import { requireUserId } from '#app/utils/auth.server.ts'
 import { prisma } from '#app/utils/db.server.ts'
-import { type Route } from './+types/notes.$noteId_.edit.ts'
-import { NoteEditor } from './__note-editor.tsx'
+import { type Route } from './+types/articles.$articleId_.edit.ts'
+import { ArticleEditor } from './__article-editor.tsx'
 
-export { action } from './__note-editor.server.tsx'
+export { action } from './__article-editor.server.tsx'
 
 export async function loader({ params, request }: Route.LoaderArgs) {
 	const userId = await requireUserId(request)
-	const note = await prisma.note.findFirst({
+	const article = await prisma.article.findFirst({
 		select: {
 			id: true,
 			title: true,
@@ -23,19 +23,19 @@ export async function loader({ params, request }: Route.LoaderArgs) {
 			},
 		},
 		where: {
-			id: params.noteId,
+			id: params.articleId,
 			ownerId: userId,
 		},
 	})
-	invariantResponse(note, 'Not found', { status: 404 })
-	return { note }
+	invariantResponse(article, 'Not found', { status: 404 })
+	return { article }
 }
 
-export default function NoteEdit({
+export default function ArticleEdit({
 	loaderData,
 	actionData,
 }: Route.ComponentProps) {
-	return <NoteEditor note={loaderData.note} actionData={actionData} />
+	return <ArticleEditor article={loaderData.article} actionData={actionData} />
 }
 
 export function ErrorBoundary() {
@@ -43,7 +43,7 @@ export function ErrorBoundary() {
 		<GeneralErrorBoundary
 			statusHandlers={{
 				404: ({ params }) => (
-					<p>No note with the id "{params.noteId}" exists</p>
+					<p>No article with the id "{params.articleId}" exists</p>
 				),
 			}}
 		/>

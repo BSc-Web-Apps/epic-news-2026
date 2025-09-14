@@ -20,8 +20,8 @@ import { Icon } from '#app/components/ui/icon.tsx'
 import { Label } from '#app/components/ui/label.tsx'
 import { StatusButton } from '#app/components/ui/status-button.tsx'
 import { Textarea } from '#app/components/ui/textarea.tsx'
-import { cn, getNoteImgSrc, useIsPending } from '#app/utils/misc.tsx'
-import { type Route } from './+types/notes.$noteId_.edit.ts'
+import { cn, getArticleImgSrc, useIsPending } from '#app/utils/misc.tsx'
+import { type Route } from './+types/articles.$articleId_.edit.ts'
 
 const titleMinLength = 1
 const titleMaxLength = 100
@@ -43,32 +43,32 @@ const ImageFieldsetSchema = z.object({
 
 export type ImageFieldset = z.infer<typeof ImageFieldsetSchema>
 
-export const NoteEditorSchema = z.object({
+export const ArticleEditorSchema = z.object({
 	id: z.string().optional(),
 	title: z.string().min(titleMinLength).max(titleMaxLength),
 	content: z.string().min(contentMinLength).max(contentMaxLength),
 	images: z.array(ImageFieldsetSchema).max(5).optional(),
 })
 
-export function NoteEditor({
-	note,
+export function ArticleEditor({
+	article,
 	actionData,
 }: {
-	note?: Route.ComponentProps['loaderData']['note']
+	article?: Route.ComponentProps['loaderData']['article']
 	actionData?: Route.ComponentProps['actionData']
 }) {
 	const isPending = useIsPending()
 
 	const [form, fields] = useForm({
-		id: 'note-editor',
-		constraint: getZodConstraint(NoteEditorSchema),
+		id: 'article-editor',
+		constraint: getZodConstraint(ArticleEditorSchema),
 		lastResult: actionData?.result,
 		onValidate({ formData }) {
-			return parseWithZod(formData, { schema: NoteEditorSchema })
+			return parseWithZod(formData, { schema: ArticleEditorSchema })
 		},
 		defaultValue: {
-			...note,
-			images: note?.images ?? [{}],
+			...article,
+			images: article?.images ?? [{}],
 		},
 		shouldRevalidate: 'onBlur',
 	})
@@ -89,7 +89,9 @@ export function NoteEditor({
 					rather than the first button in the form (which is delete/add image).
 				*/}
 					<button type="submit" className="hidden" />
-					{note ? <input type="hidden" name="id" value={note.id} /> : null}
+					{article ? (
+						<input type="hidden" name="id" value={article.id} />
+					) : null}
 					<div className="flex flex-col gap-1">
 						<Field
 							labelProps={{ children: 'Title' }}
@@ -111,7 +113,7 @@ export function NoteEditor({
 							<ul className="flex flex-col gap-4">
 								{imageList.map((imageMeta, index) => {
 									const imageMetaId = imageMeta.getFieldset().id.value
-									const image = note?.images.find(
+									const image = article?.images.find(
 										({ id }) => id === imageMetaId,
 									)
 									return (
@@ -182,7 +184,7 @@ function ImageChooser({
 	const fields = meta.getFieldset()
 	const existingImage = Boolean(fields.id.initialValue)
 	const [previewImage, setPreviewImage] = useState<string | null>(
-		objectKey ? getNoteImgSrc(objectKey) : null,
+		objectKey ? getArticleImgSrc(objectKey) : null,
 	)
 	const [altText, setAltText] = useState(fields.altText.initialValue ?? '')
 
@@ -286,7 +288,7 @@ export function ErrorBoundary() {
 		<GeneralErrorBoundary
 			statusHandlers={{
 				404: ({ params }) => (
-					<p>No note with the id "{params.noteId}" exists</p>
+					<p>No article with the id "{params.articleId}" exists</p>
 				),
 			}}
 		/>

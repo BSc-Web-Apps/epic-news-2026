@@ -2,5 +2,29 @@
   "./tests/fixtures/openimg/public/img/user-png-w-256-h-256-fit-base.avif": {
     "size": 1551,
     "contentType": "image/avif"
+  },
+  "./tests/fixtures/openimg/fly-storage-tigris-dev/mock-bucket/kody-articles/cute-koala-png-w-512-h-512-fit-base.avif": {
+    "size": 12651,
+    "contentType": "image/avif"
+  },
+  "./tests/fixtures/openimg/fly-storage-tigris-dev/mock-bucket/kody-articles/koala-eating-png-w-512-h-512-fit-base.avif": {
+    "size": 23651,
+    "contentType": "image/avif"
+  },
+  "./tests/fixtures/openimg/fly-storage-tigris-dev/mock-bucket/kody-articles/koala-cuddle-png-w-512-h-512-fit-base.avif": {
+    "size": 15725,
+    "contentType": "image/avif"
+  },
+  "./tests/fixtures/openimg/fly-storage-tigris-dev/mock-bucket/users/cmfk2bfq8002hqj7o7c3rqabr/articles/414f0c09/images/1757877147169-wrie4x0ro1v129nq4aesirqt-webp-w-512-h-512-fit-base.avif": {
+    "size": 25733,
+    "contentType": "image/avif"
+  },
+  "./tests/fixtures/openimg/fly-storage-tigris-dev/mock-bucket/users/cmfk2bfq8002hqj7o7c3rqabr/articles/414f0c09/images/1757877147169-wrie4x0ro1v129nq4aesirqt-webp-w-base-h-base-fit-base.webp": {
+    "size": 52692,
+    "contentType": "image/webp"
+  },
+  "./tests/fixtures/openimg/fly-storage-tigris-dev/mock-bucket/kody-articles/koala-cuddle-png-w-base-h-base-fit-base.png": {
+    "size": 489965,
+    "contentType": "image/png"
   }
 }

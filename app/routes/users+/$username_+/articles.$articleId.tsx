@@ -14,16 +14,16 @@ import { Icon } from '#app/components/ui/icon.tsx'
 import { StatusButton } from '#app/components/ui/status-button.tsx'
 import { requireUserId } from '#app/utils/auth.server.ts'
 import { prisma } from '#app/utils/db.server.ts'
-import { getNoteImgSrc, useIsPending } from '#app/utils/misc.tsx'
+import { getArticleImgSrc, useIsPending } from '#app/utils/misc.tsx'
 import { requireUserWithPermission } from '#app/utils/permissions.server.ts'
 import { redirectWithToast } from '#app/utils/toast.server.ts'
 import { userHasPermission, useOptionalUser } from '#app/utils/user.ts'
-import { type Route } from './+types/notes.$noteId.ts'
-import { type Route as NotesRoute } from './+types/notes.ts'
+import { type Route } from './+types/articles.$articleId.ts'
+import { type Route as ArticlesRoute } from './+types/articles.ts'
 
 export async function loader({ params }: Route.LoaderArgs) {
-	const note = await prisma.note.findUnique({
-		where: { id: params.noteId },
+	const article = await prisma.article.findUnique({
+		where: { id: params.articleId },
 		select: {
 			id: true,
 			title: true,
@@ -39,17 +39,17 @@ export async function loader({ params }: Route.LoaderArgs) {
 		},
 	})
 
-	invariantResponse(note, 'Not found', { status: 404 })
+	invariantResponse(article, 'Not found', { status: 404 })
 
-	const date = new Date(note.updatedAt)
+	const date = new Date(article.updatedAt)
 	const timeAgo = formatDistanceToNow(date)
 
-	return { note, timeAgo }
+	return { article, timeAgo }
 }
 
 const DeleteFormSchema = z.object({
-	intent: z.literal('delete-note'),
-	noteId: z.string(),
+	intent: z.literal('delete-article'),
+	articleId: z.string(),
 })
 
 export async function action({ request }: Route.ActionArgs) {
@@ -65,68 +65,68 @@ export async function action({ request }: Route.ActionArgs) {
 		)
 	}
 
-	const { noteId } = submission.value
+	const { articleId } = submission.value
 
-	const note = await prisma.note.findFirst({
+	const article = await prisma.article.findFirst({
 		select: { id: true, ownerId: true, owner: { select: { username: true } } },
-		where: { id: noteId },
+		where: { id: articleId },
 	})
-	invariantResponse(note, 'Not found', { status: 404 })
+	invariantResponse(article, 'Not found', { status: 404 })
 
-	const isOwner = note.ownerId === userId
+	const isOwner = article.ownerId === userId
 	await requireUserWithPermission(
 		request,
-		isOwner ? `delete:note:own` : `delete:note:any`,
+		isOwner ? `delete:article:own` : `delete:article:any`,
 	)
 
-	await prisma.note.delete({ where: { id: note.id } })
+	await prisma.article.delete({ where: { id: article.id } })
 
-	return redirectWithToast(`/users/${note.owner.username}/notes`, {
+	return redirectWithToast(`/users/${article.owner.username}/articles`, {
 		type: 'success',
 		title: 'Success',
-		description: 'Your note has been deleted.',
+		description: 'Your article has been deleted.',
 	})
 }
 
-export default function NoteRoute({
+export default function ArticleRoute({
 	loaderData,
 	actionData,
 }: Route.ComponentProps) {
 	const user = useOptionalUser()
-	const isOwner = user?.id === loaderData.note.ownerId
+	const isOwner = user?.id === loaderData.article.ownerId
 	const canDelete = userHasPermission(
 		user,
-		isOwner ? `delete:note:own` : `delete:note:any`,
+		isOwner ? `delete:article:own` : `delete:article:any`,
 	)
 	const displayBar = canDelete || isOwner
 
 	// Add ref for auto-focusing
 	const sectionRef = useRef<HTMLElement>(null)
 
-	// Focus the section when the note ID changes
+	// Focus the section when the article ID changes
 	useEffect(() => {
 		if (sectionRef.current) {
 			sectionRef.current.focus()
 		}
-	}, [loaderData.note.id])
+	}, [loaderData.article.id])
 
 	return (
 		<section
 			ref={sectionRef}
 			className="absolute inset-0 flex flex-col px-10"
-			aria-labelledby="note-title"
+			aria-labelledby="article-title"
 			tabIndex={-1} // Make the section focusable without keyboard navigation
 		>
-			<h2 id="note-title" className="text-h2 mb-2 pt-12 lg:mb-6">
-				{loaderData.note.title}
+			<h2 id="article-title" className="text-h2 mb-2 pt-12 lg:mb-6">
+				{loaderData.article.title}
 			</h2>
 			<div className={`${displayBar ? 'pb-24' : 'pb-12'} overflow-y-auto`}>
 				<ul className="flex flex-wrap gap-5 py-5">
-					{loaderData.note.images.map((image) => (
+					{loaderData.article.images.map((image) => (
 						<li key={image.objectKey}>
-							<a href={getNoteImgSrc(image.objectKey)}>
+							<a href={getArticleImgSrc(image.objectKey)}>
 								<Img
-									src={getNoteImgSrc(image.objectKey)}
+									src={getArticleImgSrc(image.objectKey)}
 									alt={image.altText ?? ''}
 									className="size-32 rounded-lg object-cover"
 									width={512}
@@ -137,7 +137,7 @@ export default function NoteRoute({
 					))}
 				</ul>
 				<p className="text-sm whitespace-break-spaces md:text-lg">
-					{loaderData.note.content}
+					{loaderData.article.content}
 				</p>
 			</div>
 			{displayBar ? (
@@ -149,7 +149,10 @@ export default function NoteRoute({
 					</span>
 					<div className="grid flex-1 grid-cols-2 justify-end gap-2 min-[525px]:flex md:gap-4">
 						{canDelete ? (
-							<DeleteNote id={loaderData.note.id} actionData={actionData} />
+							<DeleteArticle
+								id={loaderData.article.id}
+								actionData={actionData}
+							/>
 						) : null}
 						<Button
 							asChild
@@ -168,7 +171,7 @@ export default function NoteRoute({
 	)
 }
 
-export function DeleteNote({
+export function DeleteArticle({
 	id,
 	actionData,
 }: {
@@ -177,17 +180,17 @@ export function DeleteNote({
 }) {
 	const isPending = useIsPending()
 	const [form] = useForm({
-		id: 'delete-note',
+		id: 'delete-article',
 		lastResult: actionData?.result,
 	})
 
 	return (
 		<Form method="POST" {...getFormProps(form)}>
-			<input type="hidden" name="noteId" value={id} />
+			<input type="hidden" name="articleId" value={id} />
 			<StatusButton
 				type="submit"
 				name="intent"
-				value="delete-note"
+				value="delete-article"
 				variant="destructive"
 				status={isPending ? 'pending' : (form.status ?? 'idle')}
 				disabled={isPending}
@@ -203,21 +206,21 @@ export function DeleteNote({
 }
 
 export const meta: Route.MetaFunction = ({ data, params, matches }) => {
-	const notesMatch = matches.find(
-		(m) => m?.id === 'routes/users+/$username_+/notes',
-	) as { data: NotesRoute.ComponentProps['loaderData'] } | undefined
+	const articlesMatch = matches.find(
+		(m) => m?.id === 'routes/users+/$username_+/articles',
+	) as { data: ArticlesRoute.ComponentProps['loaderData'] } | undefined
 
-	const displayName = notesMatch?.data?.owner.name ?? params.username
-	const noteTitle = data?.note.title ?? 'Note'
-	const noteContentsSummary =
-		data && data.note.content.length > 100
-			? data?.note.content.slice(0, 97) + '...'
+	const displayName = articlesMatch?.data?.owner.name ?? params.username
+	const articleTitle = data?.article.title ?? 'Article'
+	const articleContentsSummary =
+		data && data.article.content.length > 100
+			? data?.article.content.slice(0, 97) + '...'
 			: 'No content'
 	return [
-		{ title: `${noteTitle} | ${displayName}'s Notes | Epic Notes` },
+		{ title: `${articleTitle} | ${displayName}'s Articles | Epic Articles` },
 		{
 			name: 'description',
-			content: noteContentsSummary,
+			content: articleContentsSummary,
 		},
 	]
 }
@@ -228,7 +231,7 @@ export function ErrorBoundary() {
 			statusHandlers={{
 				403: () => <p>You are not allowed to do that</p>,
 				404: ({ params }) => (
-					<p>No note with the id "{params.noteId}" exists</p>
+					<p>No article with the id "{params.articleId}" exists</p>
 				),
 			}}
 		/>

@@ -6,7 +6,7 @@ import { Icon } from '#app/components/ui/icon.tsx'
 import { prisma } from '#app/utils/db.server.ts'
 import { cn, getUserImgSrc } from '#app/utils/misc.tsx'
 import { useOptionalUser } from '#app/utils/user.ts'
-import { type Route } from './+types/notes.ts'
+import { type Route } from './+types/articles.ts'
 
 export async function loader({ params }: Route.LoaderArgs) {
 	const owner = await prisma.user.findFirst({
@@ -15,7 +15,7 @@ export async function loader({ params }: Route.LoaderArgs) {
 			name: true,
 			username: true,
 			image: { select: { objectKey: true } },
-			notes: { select: { id: true, title: true } },
+			articles: { select: { id: true, title: true } },
 		},
 		where: { username: params.username },
 	})
@@ -25,14 +25,14 @@ export async function loader({ params }: Route.LoaderArgs) {
 	return { owner }
 }
 
-export default function NotesRoute({ loaderData }: Route.ComponentProps) {
+export default function ArticlesRoute({ loaderData }: Route.ComponentProps) {
 	const user = useOptionalUser()
 	const isOwner = user?.id === loaderData.owner.id
 	const ownerDisplayName = loaderData.owner.name ?? loaderData.owner.username
 	const navLinkDefaultClassName =
 		'line-clamp-2 block rounded-l-full py-2 pl-8 pr-6 text-base lg:text-xl'
 	return (
-		<main className="container flex min-h-[400px] flex-1 px-0 pb-12 md:px-8">
+		<main className="container flex min-h-[800px] flex-1 px-0 pb-12 md:px-8">
 			<div className="bg-muted grid w-full grid-cols-4 pl-2 md:container md:rounded-3xl md:pr-0">
 				<div className="relative col-span-1">
 					<div className="absolute inset-0 flex flex-col">
@@ -48,7 +48,7 @@ export default function NotesRoute({ loaderData }: Route.ComponentProps) {
 								height={256}
 							/>
 							<h1 className="text-center text-base font-bold md:text-lg lg:text-left lg:text-2xl">
-								{ownerDisplayName}'s Notes
+								{ownerDisplayName}'s Articles
 							</h1>
 						</Link>
 						<ul className="overflow-x-hidden overflow-y-auto pb-12">
@@ -60,21 +60,21 @@ export default function NotesRoute({ loaderData }: Route.ComponentProps) {
 											cn(navLinkDefaultClassName, isActive && 'bg-accent')
 										}
 									>
-										<Icon name="plus">New Note</Icon>
+										<Icon name="plus">New Article</Icon>
 									</NavLink>
 								</li>
 							) : null}
-							{loaderData.owner.notes.map((note) => (
-								<li key={note.id} className="p-1 pr-0">
+							{loaderData.owner.articles.map((article) => (
+								<li key={article.id} className="p-1 pr-0">
 									<NavLink
-										to={note.id}
+										to={article.id}
 										preventScrollReset
 										prefetch="intent"
 										className={({ isActive }) =>
 											cn(navLinkDefaultClassName, isActive && 'bg-accent')
 										}
 									>
-										{note.title}
+										{article.title}
 									</NavLink>
 								</li>
 							))}

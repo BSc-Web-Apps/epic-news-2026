@@ -37,15 +37,15 @@ export async function uploadProfileImage(
 	return uploadToStorage(file, key)
 }
 
-export async function uploadNoteImage(
+export async function uploadArticleImage(
 	userId: string,
-	noteId: string,
+	articleId: string,
 	file: File | FileUpload,
 ) {
 	const fileId = createId()
 	const fileExtension = file.name.split('.').pop() || ''
 	const timestamp = Date.now()
-	const key = `users/${userId}/notes/${noteId}/images/${timestamp}-${fileId}.${fileExtension}`
+	const key = `users/${userId}/articles/${articleId}/images/${timestamp}-${fileId}.${fileExtension}`
 	return uploadToStorage(file, key)
 }
 

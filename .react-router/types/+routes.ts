@@ -84,24 +84,24 @@ type Pages = {
       "username": string;
     };
   };
-  "/users/:username/notes": {
+  "/users/:username/articles": {
     params: {
       "username": string;
     };
   };
-  "/users/:username/notes/:noteId": {
+  "/users/:username/articles/:articleId": {
     params: {
       "username": string;
-      "noteId": string;
+      "articleId": string;
     };
   };
-  "/users/:username/notes/:noteId/edit": {
+  "/users/:username/articles/:articleId/edit": {
     params: {
       "username": string;
-      "noteId": string;
+      "articleId": string;
     };
   };
-  "/users/:username/notes/new": {
+  "/users/:username/articles/new": {
     params: {
       "username": string;
     };
@@ -174,7 +174,7 @@ type Pages = {
 type RouteFiles = {
   "root.tsx": {
     id: "root";
-    page: "/" | "/*" | "/admin/cache" | "/admin/cache/lru/:cacheKey" | "/admin/cache/sqlite" | "/admin/cache/sqlite/:cacheKey" | "/me" | "/resources/download-user-data" | "/resources/healthcheck" | "/resources/images" | "/resources/theme-switch" | "/settings/profile" | "/settings/profile/change-email" | "/settings/profile/connections" | "/settings/profile/passkeys" | "/settings/profile/password" | "/settings/profile/password/create" | "/settings/profile/photo" | "/settings/profile/two-factor" | "/settings/profile/two-factor/disable" | "/settings/profile/two-factor/verify" | "/users/:username" | "/users/:username/notes" | "/users/:username/notes/:noteId" | "/users/:username/notes/:noteId/edit" | "/users/:username/notes/new" | "/users" | "/auth/:provider/callback" | "/auth/:provider" | "/forgot-password" | "/login" | "/logout" | "/onboarding" | "/onboarding/:provider" | "/reset-password" | "/signup" | "/verify" | "/webauthn/authentication" | "/webauthn/registration" | "/about" | "/privacy" | "/support" | "/tos" | "/robots.txt" | "/sitemap.xml";
+    page: "/" | "/*" | "/admin/cache" | "/admin/cache/lru/:cacheKey" | "/admin/cache/sqlite" | "/admin/cache/sqlite/:cacheKey" | "/me" | "/resources/download-user-data" | "/resources/healthcheck" | "/resources/images" | "/resources/theme-switch" | "/settings/profile" | "/settings/profile/change-email" | "/settings/profile/connections" | "/settings/profile/passkeys" | "/settings/profile/password" | "/settings/profile/password/create" | "/settings/profile/photo" | "/settings/profile/two-factor" | "/settings/profile/two-factor/disable" | "/settings/profile/two-factor/verify" | "/users/:username" | "/users/:username/articles" | "/users/:username/articles/:articleId" | "/users/:username/articles/:articleId/edit" | "/users/:username/articles/new" | "/users" | "/auth/:provider/callback" | "/auth/:provider" | "/forgot-password" | "/login" | "/logout" | "/onboarding" | "/onboarding/:provider" | "/reset-password" | "/signup" | "/verify" | "/webauthn/authentication" | "/webauthn/registration" | "/about" | "/privacy" | "/support" | "/tos" | "/robots.txt" | "/sitemap.xml";
   };
   "routes/$.tsx": {
     id: "routes/$";
@@ -268,25 +268,25 @@ type RouteFiles = {
     id: "routes/users+/$username";
     page: "/users/:username";
   };
-  "routes/users+/$username_+/notes.tsx": {
-    id: "routes/users+/$username_+/notes";
-    page: "/users/:username/notes" | "/users/:username/notes/:noteId" | "/users/:username/notes/:noteId/edit" | "/users/:username/notes/new";
+  "routes/users+/$username_+/articles.tsx": {
+    id: "routes/users+/$username_+/articles";
+    page: "/users/:username/articles" | "/users/:username/articles/:articleId" | "/users/:username/articles/:articleId/edit" | "/users/:username/articles/new";
   };
-  "routes/users+/$username_+/notes.$noteId.tsx": {
-    id: "routes/users+/$username_+/notes.$noteId";
-    page: "/users/:username/notes/:noteId";
+  "routes/users+/$username_+/articles.$articleId.tsx": {
+    id: "routes/users+/$username_+/articles.$articleId";
+    page: "/users/:username/articles/:articleId";
   };
-  "routes/users+/$username_+/notes.$noteId_.edit.tsx": {
-    id: "routes/users+/$username_+/notes.$noteId_.edit";
-    page: "/users/:username/notes/:noteId/edit";
+  "routes/users+/$username_+/articles.$articleId_.edit.tsx": {
+    id: "routes/users+/$username_+/articles.$articleId_.edit";
+    page: "/users/:username/articles/:articleId/edit";
   };
-  "routes/users+/$username_+/notes.index.tsx": {
-    id: "routes/users+/$username_+/notes.index";
-    page: "/users/:username/notes";
+  "routes/users+/$username_+/articles.index.tsx": {
+    id: "routes/users+/$username_+/articles.index";
+    page: "/users/:username/articles";
   };
-  "routes/users+/$username_+/notes.new.tsx": {
-    id: "routes/users+/$username_+/notes.new";
-    page: "/users/:username/notes/new";
+  "routes/users+/$username_+/articles.new.tsx": {
+    id: "routes/users+/$username_+/articles.new";
+    page: "/users/:username/articles/new";
   };
   "routes/users+/index.tsx": {
     id: "routes/users+/index";
