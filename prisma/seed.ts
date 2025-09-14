@@ -2,6 +2,7 @@ import { faker } from '@faker-js/faker'
 import { prisma } from '#app/utils/db.server.ts'
 import { MOCK_CODE_GITHUB } from '#app/utils/providers/constants'
 import {
+	cleanupDb,
 	createPassword,
 	createUser,
 	getNoteImages,
@@ -12,6 +13,11 @@ import { insertGitHubUser } from '#tests/mocks/github.ts'
 async function seed() {
 	console.log('🌱 Seeding...')
 	console.time(`🌱 Database has been seeded`)
+
+	console.log('🧹 Cleaning up existing data...')
+	console.time('🧹 Database cleanup completed')
+	await cleanupDb()
+	console.timeEnd('🧹 Database cleanup completed')
 
 	const totalUsers = 5
 	console.time(`👤 Created ${totalUsers} users...`)

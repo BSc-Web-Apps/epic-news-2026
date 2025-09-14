@@ -3,36 +3,36 @@
     "code": "MOCK_CODE_GITHUB_KODY",
     "accessToken": "MOCK_CODE_GITHUB_KODY_mock_access_token",
     "profile": {
-      "login": "Deborah.Schuster",
-      "id": 6529590496827482,
-      "name": "Chad Lind",
+      "login": "Kameron.Durgan45",
+      "id": 380126348851121,
+      "name": "Kate Ward",
       "avatar_url": "https://github.com/ghost.png",
       "emails": [
-        "Blaze.Morissette@yahoo.com",
-        "Morgan44@hotmail.com",
-        "Frieda.Bechtelar@hotmail.com"
+        "Myrtle54@yahoo.com",
+        "Bridgette31@gmail.com",
+        "Claudia23@yahoo.com"
       ]
     },
     "emails": [
       {
-        "email": "Blaze.Morissette@yahoo.com",
+        "email": "Myrtle54@yahoo.com",
         "verified": false,
         "primary": false,
         "visibility": "public"
       },
       {
-        "email": "Morgan44@hotmail.com",
+        "email": "Bridgette31@gmail.com",
         "verified": true,
         "primary": false,
         "visibility": null
       },
       {
-        "email": "Frieda.Bechtelar@hotmail.com",
+        "email": "Claudia23@yahoo.com",
         "verified": true,
         "primary": true,
         "visibility": "public"
       }
     ],
-    "primaryEmail": "Frieda.Bechtelar@hotmail.com"
+    "primaryEmail": "Claudia23@yahoo.com"
   }
 ]
