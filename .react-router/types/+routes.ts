@@ -340,6 +340,10 @@ type RouteFiles = {
     id: "routes/_auth+/webauthn+/registration";
     page: "/webauthn/registration";
   };
+  "routes/_index.tsx": {
+    id: "routes/_index";
+    page: "/";
+  };
   "routes/_marketing+/about.tsx": {
     id: "routes/_marketing+/about";
     page: "/about";
