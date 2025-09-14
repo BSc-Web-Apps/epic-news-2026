@@ -1,3 +1,4 @@
+import path from 'node:path'
 import { reactRouter } from '@react-router/dev/vite'
 import {
 	type SentryReactRouterBuildOptions,
@@ -12,6 +13,13 @@ import { iconsSpritesheet } from 'vite-plugin-icons-spritesheet'
 const MODE = process.env.NODE_ENV
 
 export default defineConfig((config) => ({
+	resolve: {
+		alias: {
+			'~': path.resolve(import.meta.dirname, './app'),
+			'#app': path.resolve(import.meta.dirname, './app'),
+			'#tests': path.resolve(import.meta.dirname, './tests'),
+		},
+	},
 	build: {
 		target: 'es2022',
 		cssMinify: MODE === 'production',

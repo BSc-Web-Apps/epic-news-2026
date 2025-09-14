@@ -6,6 +6,7 @@
 		"types": ["@react-router/node", "vite/client"],
 		"rootDirs": [".", "./.react-router/types"],
 		"paths": {
+			"~/*": ["./app/*"],
 			"#app/*": ["./app/*"],
 			"#tests/*": ["./tests/*"],
 			"@/icon-name": [
