@@ -1,4 +1,4 @@
-import { Outlet, useLoaderData } from 'react-router'
+import { useLoaderData } from 'react-router'
 import { type Route } from './+types/root.ts'
 import { type loader } from './__root.server.tsx'
 import { GeneralErrorBoundary } from './components/error-boundary.tsx'
@@ -21,8 +21,7 @@ export default function App() {
 			<div className="flex h-screen flex-col justify-between">
 				<div className="flex-1">
 					<main className="grid h-full place-items-center">
-						{/* <h1 className="text-mega">Welcome to Epic News!</h1> */}
-						<Outlet />
+						<h1 className="text-mega">Welcome to Epic News!</h1>
 					</main>
 				</div>
 			</div>
