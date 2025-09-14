@@ -22,14 +22,14 @@ model User {
 
   image       UserImage?
   password    Password?
-  notes       Note[]
+  articles       Article[]
   roles       Role[]
   sessions    Session[]
   connections Connection[]
   passkey     Passkey[]
 }
 
-model Note {
+model Article {
   id      String @id @default(cuid())
   title   String
   content String
@@ -40,7 +40,7 @@ model Note {
   owner   User   @relation(fields: [ownerId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   ownerId String
 
-  images NoteImage[]
+  images ArticleImage[]
 
   // non-unique foreign key
   @@index([ownerId])
@@ -48,7 +48,7 @@ model Note {
   @@index([ownerId, updatedAt])
 }
 
-model NoteImage {
+model ArticleImage {
   id        String  @id @default(cuid())
   altText   String?
   objectKey String
@@ -56,11 +56,11 @@ model NoteImage {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  note   Note   @relation(fields: [noteId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  noteId String
+  article   Article   @relation(fields: [articleId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  articleId String
 
   // non-unique foreign key
-  @@index([noteId])
+  @@index([articleId])
 }
 
 model UserImage {
@@ -99,7 +99,7 @@ model Session {
 model Permission {
   id          String @id @default(cuid())
   action      String // e.g. create, read, update, delete
-  entity      String // e.g. note, user, etc.
+  entity      String // e.g. article, user, etc.
   access      String // e.g. own or any
   description String @default("")
 
