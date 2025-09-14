@@ -138,3 +138,6 @@ dist
 # Prisma
 prisma/dev.db
 prisma/data.db
+
+# Uploaded image files
+tests/fixtures/uploaded/
