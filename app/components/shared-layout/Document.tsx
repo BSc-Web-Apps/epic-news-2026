@@ -1,17 +1,11 @@
-import { Meta, Links, ScrollRestoration, Scripts } from 'react-router'
-import { ClientHintCheck } from '#app/utils/client-hints'
-import { type Theme } from '#app/utils/theme.server'
-import { HoneypotProvider } from 'remix-utils/honeypot/react'
 import { OpenImgContextProvider } from 'openimg/react'
+import { Meta, Links, ScrollRestoration, Scripts } from 'react-router'
+import { HoneypotProvider } from 'remix-utils/honeypot/react'
+import { ClientHintCheck } from '#app/utils/client-hints'
 import { getImgSrc } from '#app/utils/misc.tsx'
+import { type Theme } from '#app/utils/theme.server'
 
-export default function Document({
-	children,
-	honeyProps,
-	nonce,
-	theme = 'dark',
-	env = {},
-}: {
+interface DocumentProps {
 	children: React.ReactNode
 	nonce: string
 	honeyProps:
@@ -23,7 +17,15 @@ export default function Document({
 		| undefined
 	theme?: Theme
 	env?: Record<string, string | undefined>
-}) {
+}
+
+export default function Document({
+	children,
+	honeyProps,
+	nonce,
+	theme = 'light',
+	env = {},
+}: DocumentProps) {
 	const allowIndexing = ENV.ALLOW_INDEXING !== 'false'
 	return (
 		<HoneypotProvider {...honeyProps}>
