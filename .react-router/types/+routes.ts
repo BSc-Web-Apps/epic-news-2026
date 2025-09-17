@@ -18,6 +18,66 @@ type Pages = {
       "*": string;
     };
   };
+  "/auth/:provider/callback": {
+    params: {
+      "provider": string;
+    };
+  };
+  "/auth/:provider": {
+    params: {
+      "provider": string;
+    };
+  };
+  "/forgot-password": {
+    params: {};
+  };
+  "/login": {
+    params: {};
+  };
+  "/logout": {
+    params: {};
+  };
+  "/onboarding": {
+    params: {};
+  };
+  "/onboarding/:provider": {
+    params: {
+      "provider": string;
+    };
+  };
+  "/reset-password": {
+    params: {};
+  };
+  "/signup": {
+    params: {};
+  };
+  "/verify": {
+    params: {};
+  };
+  "/webauthn/authentication": {
+    params: {};
+  };
+  "/webauthn/registration": {
+    params: {};
+  };
+  "/about": {
+    params: {};
+  };
+  "/privacy": {
+    params: {};
+  };
+  "/support": {
+    params: {};
+  };
+  "/tos": {
+    params: {};
+  };
+  "/robots.txt": {
+    params: {};
+  };
+  "/sitemap.xml": {
+    params: {};
+  };
   "/admin/cache": {
     params: {};
   };
@@ -109,76 +169,96 @@ type Pages = {
   "/users": {
     params: {};
   };
-  "/auth/:provider/callback": {
-    params: {
-      "provider": string;
-    };
-  };
-  "/auth/:provider": {
-    params: {
-      "provider": string;
-    };
-  };
-  "/forgot-password": {
-    params: {};
-  };
-  "/login": {
-    params: {};
-  };
-  "/logout": {
-    params: {};
-  };
-  "/onboarding": {
-    params: {};
-  };
-  "/onboarding/:provider": {
-    params: {
-      "provider": string;
-    };
-  };
-  "/reset-password": {
-    params: {};
-  };
-  "/signup": {
-    params: {};
-  };
-  "/verify": {
-    params: {};
-  };
-  "/webauthn/authentication": {
-    params: {};
-  };
-  "/webauthn/registration": {
-    params: {};
-  };
-  "/about": {
-    params: {};
-  };
-  "/privacy": {
-    params: {};
-  };
-  "/support": {
-    params: {};
-  };
-  "/tos": {
-    params: {};
-  };
-  "/robots.txt": {
-    params: {};
-  };
-  "/sitemap.xml": {
-    params: {};
-  };
 };
 
 type RouteFiles = {
   "root.tsx": {
     id: "root";
-    page: "/" | "/*" | "/admin/cache" | "/admin/cache/lru/:cacheKey" | "/admin/cache/sqlite" | "/admin/cache/sqlite/:cacheKey" | "/me" | "/resources/download-user-data" | "/resources/healthcheck" | "/resources/images" | "/resources/theme-switch" | "/settings/profile" | "/settings/profile/change-email" | "/settings/profile/connections" | "/settings/profile/passkeys" | "/settings/profile/password" | "/settings/profile/password/create" | "/settings/profile/photo" | "/settings/profile/two-factor" | "/settings/profile/two-factor/disable" | "/settings/profile/two-factor/verify" | "/users/:username" | "/users/:username/articles" | "/users/:username/articles/:articleId" | "/users/:username/articles/:articleId/edit" | "/users/:username/articles/new" | "/users" | "/auth/:provider/callback" | "/auth/:provider" | "/forgot-password" | "/login" | "/logout" | "/onboarding" | "/onboarding/:provider" | "/reset-password" | "/signup" | "/verify" | "/webauthn/authentication" | "/webauthn/registration" | "/about" | "/privacy" | "/support" | "/tos" | "/robots.txt" | "/sitemap.xml";
+    page: "/" | "/*" | "/auth/:provider/callback" | "/auth/:provider" | "/forgot-password" | "/login" | "/logout" | "/onboarding" | "/onboarding/:provider" | "/reset-password" | "/signup" | "/verify" | "/webauthn/authentication" | "/webauthn/registration" | "/about" | "/privacy" | "/support" | "/tos" | "/robots.txt" | "/sitemap.xml" | "/admin/cache" | "/admin/cache/lru/:cacheKey" | "/admin/cache/sqlite" | "/admin/cache/sqlite/:cacheKey" | "/me" | "/resources/download-user-data" | "/resources/healthcheck" | "/resources/images" | "/resources/theme-switch" | "/settings/profile" | "/settings/profile/change-email" | "/settings/profile/connections" | "/settings/profile/passkeys" | "/settings/profile/password" | "/settings/profile/password/create" | "/settings/profile/photo" | "/settings/profile/two-factor" | "/settings/profile/two-factor/disable" | "/settings/profile/two-factor/verify" | "/users/:username" | "/users/:username/articles" | "/users/:username/articles/:articleId" | "/users/:username/articles/:articleId/edit" | "/users/:username/articles/new" | "/users";
   };
   "routes/$.tsx": {
     id: "routes/$";
     page: "/*";
+  };
+  "routes/_auth+/auth.$provider.callback.ts": {
+    id: "routes/_auth+/auth.$provider.callback";
+    page: "/auth/:provider/callback";
+  };
+  "routes/_auth+/auth_.$provider.ts": {
+    id: "routes/_auth+/auth_.$provider";
+    page: "/auth/:provider";
+  };
+  "routes/_auth+/forgot-password.tsx": {
+    id: "routes/_auth+/forgot-password";
+    page: "/forgot-password";
+  };
+  "routes/_auth+/login.tsx": {
+    id: "routes/_auth+/login";
+    page: "/login";
+  };
+  "routes/_auth+/logout.tsx": {
+    id: "routes/_auth+/logout";
+    page: "/logout";
+  };
+  "routes/_auth+/onboarding.tsx": {
+    id: "routes/_auth+/onboarding";
+    page: "/onboarding";
+  };
+  "routes/_auth+/onboarding_.$provider.tsx": {
+    id: "routes/_auth+/onboarding_.$provider";
+    page: "/onboarding/:provider";
+  };
+  "routes/_auth+/reset-password.tsx": {
+    id: "routes/_auth+/reset-password";
+    page: "/reset-password";
+  };
+  "routes/_auth+/signup.tsx": {
+    id: "routes/_auth+/signup";
+    page: "/signup";
+  };
+  "routes/_auth+/verify.tsx": {
+    id: "routes/_auth+/verify";
+    page: "/verify";
+  };
+  "routes/_auth+/webauthn+/authentication.ts": {
+    id: "routes/_auth+/webauthn+/authentication";
+    page: "/webauthn/authentication";
+  };
+  "routes/_auth+/webauthn+/registration.ts": {
+    id: "routes/_auth+/webauthn+/registration";
+    page: "/webauthn/registration";
+  };
+  "routes/_index.tsx": {
+    id: "routes/_index";
+    page: "/";
+  };
+  "routes/_marketing+/about.tsx": {
+    id: "routes/_marketing+/about";
+    page: "/about";
+  };
+  "routes/_marketing+/index.tsx": {
+    id: "routes/_marketing+/index";
+    page: "/";
+  };
+  "routes/_marketing+/privacy.tsx": {
+    id: "routes/_marketing+/privacy";
+    page: "/privacy";
+  };
+  "routes/_marketing+/support.tsx": {
+    id: "routes/_marketing+/support";
+    page: "/support";
+  };
+  "routes/_marketing+/tos.tsx": {
+    id: "routes/_marketing+/tos";
+    page: "/tos";
+  };
+  "routes/_seo+/robots[.]txt.ts": {
+    id: "routes/_seo+/robots[.]txt";
+    page: "/robots.txt";
+  };
+  "routes/_seo+/sitemap[.]xml.ts": {
+    id: "routes/_seo+/sitemap[.]xml";
+    page: "/sitemap.xml";
   };
   "routes/admin+/cache.tsx": {
     id: "routes/admin+/cache";
@@ -291,85 +371,5 @@ type RouteFiles = {
   "routes/users+/index.tsx": {
     id: "routes/users+/index";
     page: "/users";
-  };
-  "routes/_auth+/auth.$provider.callback.ts": {
-    id: "routes/_auth+/auth.$provider.callback";
-    page: "/auth/:provider/callback";
-  };
-  "routes/_auth+/auth_.$provider.ts": {
-    id: "routes/_auth+/auth_.$provider";
-    page: "/auth/:provider";
-  };
-  "routes/_auth+/forgot-password.tsx": {
-    id: "routes/_auth+/forgot-password";
-    page: "/forgot-password";
-  };
-  "routes/_auth+/login.tsx": {
-    id: "routes/_auth+/login";
-    page: "/login";
-  };
-  "routes/_auth+/logout.tsx": {
-    id: "routes/_auth+/logout";
-    page: "/logout";
-  };
-  "routes/_auth+/onboarding.tsx": {
-    id: "routes/_auth+/onboarding";
-    page: "/onboarding";
-  };
-  "routes/_auth+/onboarding_.$provider.tsx": {
-    id: "routes/_auth+/onboarding_.$provider";
-    page: "/onboarding/:provider";
-  };
-  "routes/_auth+/reset-password.tsx": {
-    id: "routes/_auth+/reset-password";
-    page: "/reset-password";
-  };
-  "routes/_auth+/signup.tsx": {
-    id: "routes/_auth+/signup";
-    page: "/signup";
-  };
-  "routes/_auth+/verify.tsx": {
-    id: "routes/_auth+/verify";
-    page: "/verify";
-  };
-  "routes/_auth+/webauthn+/authentication.ts": {
-    id: "routes/_auth+/webauthn+/authentication";
-    page: "/webauthn/authentication";
-  };
-  "routes/_auth+/webauthn+/registration.ts": {
-    id: "routes/_auth+/webauthn+/registration";
-    page: "/webauthn/registration";
-  };
-  "routes/_index.tsx": {
-    id: "routes/_index";
-    page: "/";
-  };
-  "routes/_marketing+/about.tsx": {
-    id: "routes/_marketing+/about";
-    page: "/about";
-  };
-  "routes/_marketing+/index.tsx": {
-    id: "routes/_marketing+/index";
-    page: "/";
-  };
-  "routes/_marketing+/privacy.tsx": {
-    id: "routes/_marketing+/privacy";
-    page: "/privacy";
-  };
-  "routes/_marketing+/support.tsx": {
-    id: "routes/_marketing+/support";
-    page: "/support";
-  };
-  "routes/_marketing+/tos.tsx": {
-    id: "routes/_marketing+/tos";
-    page: "/tos";
-  };
-  "routes/_seo+/robots[.]txt.ts": {
-    id: "routes/_seo+/robots[.]txt";
-    page: "/robots.txt";
-  };
-  "routes/_seo+/sitemap[.]xml.ts": {
-    id: "routes/_seo+/sitemap[.]xml";
-    page: "/sitemap.xml";
   };
 };
