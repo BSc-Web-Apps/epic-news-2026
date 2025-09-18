@@ -139,7 +139,9 @@ dist
 prisma/dev.db
 prisma/data.db
 
-# Uploaded image files
+# Uploaded image files and github mock users
 tests/fixtures/uploaded/
-/tests/fixtures/github
-/server-build
+tests/fixtures/github/users.*.json
+
+# React Router build output
+server-build/
