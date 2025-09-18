@@ -12,17 +12,17 @@ datasource db {
 }
 
 model User {
-  id       String  @id @default(cuid())
-  email    String  @unique
-  username String  @unique
-  name     String?
+  id          String  @id @default(cuid())
+  email       String  @unique
+  username    String  @unique
+  name        String?
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 
   image       UserImage?
   password    Password?
-  articles       Article[]
+  articles    Article[]
   roles       Role[]
   sessions    Session[]
   connections Connection[]
@@ -30,17 +30,17 @@ model User {
 }
 
 model Article {
-  id      String @id @default(cuid())
-  title   String
-  content String
+  id        String @id @default(cuid())
+  title     String
+  content   String
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  owner   User   @relation(fields: [ownerId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  ownerId String
+  owner     User   @relation(fields: [ownerId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  ownerId   String
 
-  images ArticleImage[]
+  images    ArticleImage[]
 
   // non-unique foreign key
   @@index([ownerId])
@@ -71,26 +71,26 @@ model UserImage {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  userId String @unique
+  user      User   @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  userId    String @unique
 }
 
 model Password {
-  hash String
+  hash      String
 
-  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  userId String @unique
+  user      User   @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  userId    String @unique
 }
 
 model Session {
-  id             String   @id @default(cuid())
-  expirationDate DateTime
+  id              String   @id @default(cuid())
+  expirationDate  DateTime
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
 
-  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  userId String
+  user            User   @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  userId          String
 
   // non-unique foreign key
   @@index([userId])
