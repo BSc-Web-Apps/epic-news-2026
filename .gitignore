@@ -142,3 +142,4 @@ prisma/data.db
 # Uploaded image files
 tests/fixtures/uploaded/
 /tests/fixtures/github
+/server-build
