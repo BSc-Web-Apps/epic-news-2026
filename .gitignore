@@ -145,3 +145,6 @@ tests/fixtures/github/users.*.json
 
 # React Router build output
 server-build/
+/.react-router
+app/components/ui/icons/sprite.svg
+app/components/ui/icons/types.ts
