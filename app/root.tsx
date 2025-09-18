@@ -2,12 +2,12 @@ import { useLoaderData } from 'react-router'
 import { type Route } from './+types/root.ts'
 import { type loader } from './__root.server.tsx'
 import { GeneralErrorBoundary } from './components/error-boundary.tsx'
+import FooterMenuRight from './components/organisms/Footer/FooterMenuRight'
+import HeaderWithSearch from './components/organisms/HeaderWithSearch'
 import Document from './components/shared-layout/Document.tsx'
 import { ThemeSwitch, useTheme } from './routes/resources+/theme-switch.tsx'
 import { useNonce } from './utils/nonce-provider.ts'
 import rootLinkElements from './utils/providers/rootLinkElements.ts'
-import HeaderWithSearch from './components/organisms/HeaderWithSearch'
-import FooterMenuRight from './components/organisms/Footer/FooterMenuRight'
 
 export const links: Route.LinksFunction = () => {
 	return rootLinkElements
