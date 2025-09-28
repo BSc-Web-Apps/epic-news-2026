@@ -4,13 +4,13 @@ import { type loader } from './__root.server.tsx'
 import { GeneralErrorBoundary } from './components/error-boundary.tsx'
 import FooterMenuRight from './components/organisms/Footer/FooterMenuRight'
 import HeaderWithSearch from './components/organisms/HeaderWithSearch'
+import HeroCallToAction from './components/organisms/Hero/HeroCallToAction.tsx'
 import Document from './components/shared-layout/Document.tsx'
+import { Button } from './components/ui/button.tsx'
 import { ThemeSwitch, useTheme } from './routes/resources+/theme-switch.tsx'
 import { useNonce } from './utils/nonce-provider.ts'
 import rootLinkElements from './utils/providers/rootLinkElements.ts'
-import HeroCallToAction from './components/organisms/Hero/HeroCallToAction.tsx'
 import heroImage from '~/assets/jpg/sample-hero.jpg'
-import { Button } from './components/ui/button.tsx'
 
 export const links: Route.LinksFunction = () => {
 	return rootLinkElements
