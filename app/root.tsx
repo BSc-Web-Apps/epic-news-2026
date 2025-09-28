@@ -11,6 +11,9 @@ import { ThemeSwitch, useTheme } from './routes/resources+/theme-switch.tsx'
 import { useNonce } from './utils/nonce-provider.ts'
 import rootLinkElements from './utils/providers/rootLinkElements.ts'
 import heroImage from '~/assets/jpg/sample-hero.jpg'
+import { ParallaxProvider } from 'react-scroll-parallax'
+import ParallaxBackground from './components/organisms/Hero/ParallaxBackground.tsx'
+import logo from '~/assets/svg/epic-news-sample-logo.svg'
 
 export const links: Route.LinksFunction = () => {
 	return rootLinkElements
@@ -24,39 +27,44 @@ export default function App() {
 	const theme = useTheme()
 
 	return (
-		<Document theme={theme} nonce={nonce} honeyProps={data?.honeyProps}>
-			<div className="flex h-screen flex-col justify-between">
-				<HeaderWithSearch />
+		<ParallaxProvider>
+			<Document theme={theme} nonce={nonce} honeyProps={data?.honeyProps}>
+				<div className="flex h-screen flex-col justify-between">
+					<HeaderWithSearch />
 
-				<div className="flex-1">
-					<main className="h-full">
-						<HeroCallToAction
-							image={heroImage}
-							imageRight={true}
-							hasBackgroundColour={true}
-						>
-							<div className="flex h-full flex-1 flex-col justify-between p-16">
-								<div className="flex flex-col gap-8">
-									<h2 className="text-h2">Welcome to Epic News</h2>
-									<p className="text-lg">
-										Keep up to date with the latest tech news.
+					<div className="flex-1">
+						<main className="h-full">
+							<ParallaxBackground
+								image={heroImage}
+								title="Epic News"
+								logo={logo}
+								altText="Welcome to Epic News, where the latest developments in tech are found."
+							>
+								<div className="bg-secondary/40 mx-auto flex w-fit flex-1 flex-col justify-between gap-16 px-28 py-16 backdrop-blur-sm">
+									<p className="text-secondary-foreground text-center text-4xl font-extrabold">
+										The latest tech news in one place
 									</p>
+									<div className="flex justify-center gap-8">
+										<Button variant="default" size="wide">
+											<Link to="/signup">Sign up</Link>
+										</Button>
+										<Button variant="secondary" size="wide">
+											<Link to="/login">Login</Link>
+										</Button>
+									</div>
 								</div>
-								<Button asChild variant="default" size="lg">
-									<Link to="/signup">Sign up</Link>
-								</Button>
-							</div>
-						</HeroCallToAction>
-					</main>
-				</div>
+							</ParallaxBackground>
+						</main>
+					</div>
 
-				<div className="container flex justify-between pb-5">
-					<ThemeSwitch userPreference={data?.requestInfo.userPrefs.theme} />
-				</div>
+					<div className="container flex justify-between pb-5">
+						<ThemeSwitch userPreference={data?.requestInfo.userPrefs.theme} />
+					</div>
 
-				<FooterMenuRight />
-			</div>
-		</Document>
+					<FooterMenuRight />
+				</div>
+			</Document>
+		</ParallaxProvider>
 	)
 }
 
