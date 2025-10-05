@@ -2,6 +2,7 @@ import appleTouchIconAssetUrl from '#app/assets/favicons/apple-touch-icon.png'
 import faviconAssetUrl from '#app/assets/favicons/favicon.svg'
 import { href as iconsHref } from '#app/components/ui/icon.tsx'
 import tailwindStyleSheetUrl from '#app/styles/tailwind.css?url'
+import sonnerStyleSheetUrl from 'sonner/dist/styles.css?url'
 
 export default [
 	// Preload svg sprite as a resource to avoid render blocking
@@ -19,4 +20,5 @@ export default [
 		crossOrigin: 'use-credentials',
 	} as const, // necessary to make typescript happy
 	{ rel: 'stylesheet', href: tailwindStyleSheetUrl },
+	{ rel: 'stylesheet', href: sonnerStyleSheetUrl },
 ].filter(Boolean)

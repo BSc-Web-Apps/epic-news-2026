@@ -11,6 +11,10 @@ import {
 	ArticleEditorSchema,
 	type ImageFieldset,
 } from './__article-editor'
+import { AuthenticityTokenInput } from 'remix-utils/csrf/react'
+import { CSRFError } from 'remix-utils/csrf/server'
+import { csrf } from '~/utils/csrf.server'
+import { redirectWithToast } from '#app/utils/toast.server.ts'
 
 function imageHasFile(
 	image: ImageFieldset,
@@ -25,6 +29,22 @@ function imageHasId(
 }
 
 export async function action({ request }: ActionFunctionArgs) {
+	try {
+		await csrf.validate(request)
+	} catch (error) {
+		if (error instanceof CSRFError) {
+			return redirectWithToast(`/`, {
+				description:
+					'CSRF token is invalid. Please try editing your article again in a new window',
+				type: 'error',
+			})
+		}
+		return redirectWithToast(`/`, {
+			description: 'Something went wrong. Please try again in a new window',
+			type: 'error',
+		})
+	}
+
 	const userId = await requireUserId(request)
 
 	const formData = await parseFormData(request, {
