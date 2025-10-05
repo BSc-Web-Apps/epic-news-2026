@@ -2,15 +2,15 @@ import { data } from 'react-router'
 import { type Route } from './+types/root.ts'
 import { getUserId, logout } from './utils/auth.server.ts'
 import { getHints } from './utils/client-hints'
+import { csrf } from './utils/csrf.server.ts'
 import { prisma } from './utils/db.server.ts'
 import { getEnv } from './utils/env.server.ts'
 import { pipeHeaders } from './utils/headers.server.ts'
 import { honeypot } from './utils/honeypot.server.ts'
-import { getDomainUrl, combineHeaders } from './utils/misc.tsx'
+import { combineHeaders, getDomainUrl } from './utils/misc.tsx'
 import { getTheme } from './utils/theme.server'
 import { makeTimings, time } from './utils/timing.server'
 import { getToast } from './utils/toast.server.ts'
-import { csrf } from './utils/csrf.server.ts'
 
 export const headers: Route.HeadersFunction = pipeHeaders
 
