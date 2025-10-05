@@ -10,6 +10,7 @@ import { getDomainUrl, combineHeaders } from './utils/misc.tsx'
 import { getTheme } from './utils/theme.server'
 import { makeTimings, time } from './utils/timing.server'
 import { getToast } from './utils/toast.server.ts'
+import { csrf } from './utils/csrf.server.ts'
 
 export const headers: Route.HeadersFunction = pipeHeaders
 
@@ -52,6 +53,7 @@ export async function loader({ request }: Route.LoaderArgs) {
 	}
 	const { toast, headers: toastHeaders } = await getToast(request)
 	const honeyProps = await honeypot.getInputProps()
+	let [csrfToken, csrfCookieHeader] = await csrf.commitToken(request)
 
 	return data(
 		{
@@ -67,9 +69,11 @@ export async function loader({ request }: Route.LoaderArgs) {
 			ENV: getEnv(),
 			toast,
 			honeyProps,
+			csrfToken,
 		},
 		{
 			headers: combineHeaders(
+				{ 'set-cookie': csrfCookieHeader || '' },
 				{ 'Server-Timing': timings.toString() },
 				toastHeaders,
 			),
