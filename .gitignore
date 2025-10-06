@@ -140,8 +140,7 @@ prisma/dev.db
 prisma/data.db
 
 # Uploaded image files and github mock users
-tests/fixtures/uploaded/
-tests/fixtures/github/users.*.json
+tests/fixtures
 
 # React Router build output
 server-build/
