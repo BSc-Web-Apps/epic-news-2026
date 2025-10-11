@@ -11,6 +11,7 @@ import { getZodConstraint, parseWithZod } from '@conform-to/zod'
 import { Img } from 'openimg/react'
 import { useState } from 'react'
 import { Form } from 'react-router'
+import { AuthenticityTokenInput } from 'remix-utils/csrf/react'
 import { z } from 'zod'
 import { GeneralErrorBoundary } from '#app/components/error-boundary.tsx'
 import { floatingToolbarClassName } from '#app/components/floating-toolbar.tsx'
@@ -22,11 +23,14 @@ import { StatusButton } from '#app/components/ui/status-button.tsx'
 import { Textarea } from '#app/components/ui/textarea.tsx'
 import { cn, getArticleImgSrc, useIsPending } from '#app/utils/misc.tsx'
 import { type Route } from './+types/articles.$articleId_.edit.ts'
+import SelectorGroup from '~/components/molecules/SelectorGroup.tsx'
 
 const titleMinLength = 1
 const titleMaxLength = 100
 const contentMinLength = 1
 const contentMaxLength = 10000
+const categoryMinLength = 1
+const categoryMaxLength = 30
 
 export const MAX_UPLOAD_SIZE = 1024 * 1024 * 3 // 3MB
 
@@ -46,6 +50,11 @@ export type ImageFieldset = z.infer<typeof ImageFieldsetSchema>
 export const ArticleEditorSchema = z.object({
 	id: z.string().optional(),
 	title: z.string().min(titleMinLength).max(titleMaxLength),
+	categoryId: z
+		.string()
+		.min(categoryMinLength)
+		.max(categoryMaxLength)
+		.optional(),
 	content: z.string().min(contentMinLength).max(contentMaxLength),
 	images: z.array(ImageFieldsetSchema).max(5).optional(),
 })
@@ -53,9 +62,11 @@ export const ArticleEditorSchema = z.object({
 export function ArticleEditor({
 	article,
 	actionData,
+	categories,
 }: {
 	article?: Route.ComponentProps['loaderData']['article']
 	actionData?: Route.ComponentProps['actionData']
+	categories?: Route.ComponentProps['loaderData']['categories']
 }) {
 	const isPending = useIsPending()
 
@@ -68,6 +79,7 @@ export function ArticleEditor({
 		},
 		defaultValue: {
 			...article,
+			categoryId: article?.category?.id ?? '',
 			images: article?.images ?? [{}],
 		},
 		shouldRevalidate: 'onBlur',
@@ -83,6 +95,8 @@ export function ArticleEditor({
 					{...getFormProps(form)}
 					encType="multipart/form-data"
 				>
+					{/* CSRF token */}
+					<AuthenticityTokenInput />
 					{/*
 					This hidden submit button is here to ensure that when the user hits
 					"enter" on an input field, the primary form function is submitted
@@ -108,6 +122,19 @@ export function ArticleEditor({
 							}}
 							errors={fields.content.errors}
 						/>
+						{categories?.length ? (
+							<div className="pb-8">
+								<Label>Category</Label>
+								<SelectorGroup
+									name="categoryId"
+									initialValue={article?.category?.id ?? ''}
+									options={categories.map((category) => ({
+										value: category.id,
+										label: category.name,
+									}))}
+								/>
+							</div>
+						) : null}
 						<div>
 							<Label>Images</Label>
 							<ul className="flex flex-col gap-4">

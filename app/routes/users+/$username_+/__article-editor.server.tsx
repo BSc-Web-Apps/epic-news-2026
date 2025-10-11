@@ -2,19 +2,18 @@ import { parseWithZod } from '@conform-to/zod'
 import { parseFormData } from '@mjackson/form-data-parser'
 import { createId as cuid } from '@paralleldrive/cuid2'
 import { data, redirect, type ActionFunctionArgs } from 'react-router'
+import { CSRFError } from 'remix-utils/csrf/server'
 import { z } from 'zod'
 import { requireUserId } from '#app/utils/auth.server.ts'
 import { prisma } from '#app/utils/db.server.ts'
 import { uploadArticleImage } from '#app/utils/storage.server.ts'
+import { redirectWithToast } from '#app/utils/toast.server.ts'
 import {
-	MAX_UPLOAD_SIZE,
 	ArticleEditorSchema,
+	MAX_UPLOAD_SIZE,
 	type ImageFieldset,
 } from './__article-editor'
-import { AuthenticityTokenInput } from 'remix-utils/csrf/react'
-import { CSRFError } from 'remix-utils/csrf/server'
 import { csrf } from '~/utils/csrf.server'
-import { redirectWithToast } from '#app/utils/toast.server.ts'
 
 function imageHasFile(
 	image: ImageFieldset,
@@ -117,6 +116,7 @@ export async function action({ request }: ActionFunctionArgs) {
 		id: articleId,
 		title,
 		content,
+		categoryId,
 		imageUpdates = [],
 		newImages = [],
 	} = submission.value
@@ -129,11 +129,13 @@ export async function action({ request }: ActionFunctionArgs) {
 			ownerId: userId,
 			title,
 			content,
+			categoryId,
 			images: { create: newImages },
 		},
 		update: {
 			title,
 			content,
+			categoryId,
 			images: {
 				deleteMany: { id: { notIn: imageUpdates.map((i) => i.id) } },
 				updateMany: imageUpdates.map((updates) => ({

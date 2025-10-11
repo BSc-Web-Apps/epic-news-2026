@@ -26,5 +26,25 @@
   "./tests/fixtures/openimg/fly-storage-tigris-dev/mock-bucket/kody-articles/koala-cuddle-png-w-base-h-base-fit-base.png": {
     "size": 489965,
     "contentType": "image/png"
+  },
+  "./tests/fixtures/openimg/fly-storage-tigris-dev/mock-bucket/user/kody-png-w-256-h-256-fit-base.avif": {
+    "size": 8958,
+    "contentType": "image/avif"
+  },
+  "./tests/fixtures/openimg/fly-storage-tigris-dev/mock-bucket/user/kody-png-w-832-h-832-fit-base.avif": {
+    "size": 36550,
+    "contentType": "image/avif"
+  },
+  "./tests/fixtures/openimg/public/img/user-png-w-832-h-832-fit-base.avif": {
+    "size": 3169,
+    "contentType": "image/avif"
+  },
+  "./tests/fixtures/openimg/fly-storage-tigris-dev/mock-bucket/users/cmge2ks0k0002qjrscl1c817t/articles/i0vb4v8e1mc5soq9h2b1zdi7/images/1759728588525-xnd8sw8q7c50rvsdgplaos7p-webp-w-512-h-512-fit-base.avif": {
+    "size": 25733,
+    "contentType": "image/avif"
+  },
+  "./tests/fixtures/openimg/fly-storage-tigris-dev/mock-bucket/users/cmgmraczc0002qjjgnal9k9xs/articles/rprtbqj3tqlmgqq268gzlday/images/1760219693149-f7r6rc8movo0f8iwnlwqt7m7-webp-w-512-h-512-fit-base.avif": {
+    "size": 25733,
+    "contentType": "image/avif"
   }
 }
