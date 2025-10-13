@@ -10,7 +10,7 @@ let cacheDir: string | null = null
 async function getCacheDir() {
 	if (cacheDir) return cacheDir
 
-	let dir = './tests/fixtures/openimg'
+	let dir = './tests/fixtures/images'
 	if (process.env.NODE_ENV === 'production') {
 		const isAccessible = await fs
 			.access('/data', constants.W_OK)
@@ -33,6 +33,7 @@ export async function loader({ request }: Route.LoaderArgs) {
 	headers.set('Cache-Control', 'public, max-age=31536000, immutable')
 
 	const objectKey = searchParams.get('objectKey')
+	const cacheDir = await getCacheDir()
 
 	return getImgResponse(request, {
 		headers,
@@ -40,9 +41,25 @@ export async function loader({ request }: Route.LoaderArgs) {
 			getDomainUrl(request),
 			process.env.AWS_ENDPOINT_URL_S3,
 		].filter(Boolean),
-		cacheFolder: await getCacheDir(),
-		getImgSource: () => {
+		cacheFolder: cacheDir,
+		getImgSource: async () => {
 			if (objectKey) {
+				// In development/testing, check if the image exists locally first
+				if (process.env.NODE_ENV !== 'production') {
+					const localPath = `${cacheDir}/${objectKey}`
+					try {
+						await fs.access(localPath, constants.R_OK)
+						// File exists locally, serve it from filesystem
+						return {
+							type: 'fs',
+							path: localPath,
+						}
+					} catch {
+						// File doesn't exist locally, fall through to S3
+					}
+				}
+
+				// In production or if local file doesn't exist, fetch from S3
 				const { url: signedUrl, headers: signedHeaders } =
 					getSignedGetRequestInfo(objectKey)
 				return {
