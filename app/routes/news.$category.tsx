@@ -10,7 +10,12 @@ export async function loader({ params }: LoaderFunctionArgs) {
 	invariant(typeof category === 'string', 'Category not found')
 	const categoryTitle = toTitleCase(category)
 
-	const allArticles = await prisma.article.findMany({
+	const filteredArticles = await prisma.article.findMany({
+		where: {
+			category: {
+				slug: category, // Retrieves only articles in the specified category
+			},
+		},
 		select: {
 			id: true,
 			title: true,
@@ -19,17 +24,17 @@ export async function loader({ params }: LoaderFunctionArgs) {
 		},
 	})
 
-	return data({ categoryTitle, allArticles })
+	return data({ categoryTitle, filteredArticles })
 }
 
 export default function NewsCategoryPage() {
-	const { categoryTitle, allArticles } = useLoaderData<typeof loader>()
+	const { categoryTitle, filteredArticles } = useLoaderData<typeof loader>()
 
 	return (
 		<div className="container py-16">
 			<h2 className="text-h2">{categoryTitle}</h2>
 			<div className="mt-8 grid gap-6 md:grid-cols-3 lg:grid-cols-5">
-				{allArticles.map((article) => (
+				{filteredArticles.map((article) => (
 					<ArticleCard
 						key={article.id}
 						title={article.title}
