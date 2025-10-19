@@ -1,9 +1,9 @@
 import { data, LoaderFunctionArgs, useLoaderData } from 'react-router'
 
 export async function loader({ params }: LoaderFunctionArgs) {
-	const { article_id } = params
+	const { articleId } = params
 
-	return data({ article_id })
+	return data({ articleId })
 }
 
 export default function ArticleRoute() {
@@ -11,7 +11,7 @@ export default function ArticleRoute() {
 
 	return (
 		<main className="container py-16">
-			<h1 className="text-h1">Article {data.article_id}</h1>
+			<h1 className="text-h1">Article {data.articleId}</h1>
 		</main>
 	)
 }

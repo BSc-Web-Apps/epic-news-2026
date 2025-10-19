@@ -37,6 +37,7 @@ export default function NewsCategoryPage() {
 				{filteredArticles.map((article) => (
 					<ArticleCard
 						key={article.id}
+						articleId={article.id}
 						title={article.title}
 						category={article.category?.name}
 						objectKey={article.images[0]?.objectKey}
