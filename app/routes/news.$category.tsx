@@ -15,6 +15,7 @@ export async function loader({ params }: LoaderFunctionArgs) {
 			category: {
 				slug: category, // Retrieves only articles in the specified category
 			},
+			isPublished: true,
 		},
 		select: {
 			id: true,
