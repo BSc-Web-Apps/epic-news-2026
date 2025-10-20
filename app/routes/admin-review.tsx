@@ -5,11 +5,11 @@ import {
 	Outlet,
 	useLoaderData,
 } from 'react-router'
+import { GeneralErrorBoundary } from '#app/components/error-boundary.tsx'
+import { Button } from '~/components/atoms/Button.js'
 import { prisma } from '~/utils/db.server.ts'
 import { cn } from '~/utils/misc.tsx'
 import { requireUserWithRole } from '~/utils/permissions.server.js'
-import { Button } from '~/components/atoms/Button.js'
-import { GeneralErrorBoundary } from '#app/components/error-boundary.tsx'
 
 export async function loader({ request }: LoaderFunctionArgs) {
 	await requireUserWithRole(request, 'admin')
