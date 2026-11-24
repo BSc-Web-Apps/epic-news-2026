@@ -33,6 +33,19 @@ Again, this will take a while, so be patient 😴⏰
 npm run dev
 ```
 
+### Seeing `Filename too long` errors on Windows?
+
+Some test image files have very long paths, and Git on Windows refuses to
+handle them unless long paths are turned on. To fix it, choose **Enable Git
+long paths** from the run configurations menu at the top of Webstorm and press
+the green ▶ Run button. You can also type this into the terminal instead:
+
+```sh
+npm run fix:long-paths
+```
+
+You only need to do this once on each Windows account.
+
 ## Docs - [Code Monster](https://gedsargent.github.io/code-monster/guides/epic-news/root-tsx/)
 
 This project is intended to be a learning resource for developers and students.
